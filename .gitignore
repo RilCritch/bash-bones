@@ -1,0 +1,14 @@
+# Bash and OS artifacts
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Editor and tooling
+.idea/
+.vscode/
+
+# Local environment overrides
+.env
+*.local
+*.bak
