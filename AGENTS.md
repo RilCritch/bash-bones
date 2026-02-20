@@ -6,8 +6,8 @@
 - Keep defaults minimal; avoid adding behavior unless requested.
 
 ## Repository Layout
-- `bashrc` is the entrypoint; it loads `lib/loader.sh` and calls `bash_tpl::init`.
-- `lib/loader.sh` defines `bash_tpl::*` helpers and load order.
+- `bashrc` is the entrypoint; it loads `lib/loader.sh` and calls `bash_cfg::init`.
+- `lib/loader.sh` defines `bash_cfg::*` helpers and load order.
 - `conf/env.sh` for environment exports only.
 - `conf/path.sh` for PATH updates only.
 - `conf/options.sh` for interactive shell options only.
@@ -21,7 +21,7 @@
 ## Load Order (source-safe)
 - Always: `conf/env.sh`, then `conf/path.sh`.
 - Interactive only: `conf/options.sh`, `conf/completion.sh`, `features/core.sh`, `aliases.d/aliases.sh`, `prompt/prompt.sh`.
-- Use `bash_tpl::try_source` for any optional file sourcing.
+- Use `bash_cfg::try_source` for any optional file sourcing.
 
 ## Build / Lint / Test Commands
 - Build: none (this is a Bash config template; no build system present).
@@ -49,7 +49,7 @@
 - If you require external tools, check availability first.
 
 ## Imports and Sourcing
-- Prefer `bash_tpl::try_source` for optional files.
+- Prefer `bash_cfg::try_source` for optional files.
 - When sourcing explicitly, use `. "$file"` and include `# shellcheck source=/dev/null` if needed.
 - Never assume `BASH_TPL_ROOT` is set; resolve with `${BASH_TPL_ROOT:-${HOME}/.bash}`.
 - Avoid sourcing files from unknown locations or user input.
@@ -62,7 +62,7 @@
 - Do not align with tabs or extensive padding.
 
 ## Naming Conventions
-- Functions should be namespaced with `bash_tpl::` (e.g., `bash_tpl::init`).
+- Functions should be namespaced with `bash_cfg::` (e.g., `bash_cfg::init`).
 - Local variables: `lower_snake_case` with `local`.
 - Environment exports: `UPPER_SNAKE_CASE`.
 - Temporary variables should be scoped and unset only if they might leak globally.
@@ -72,6 +72,7 @@
 ## Variables and Exports
 - Prefer `local` in functions; avoid implicit globals.
 - Use `readonly` or `local -r` for constants where useful.
+- Use `local -i` for integer arithmetic and `local -a`/`local -A` for arrays when helpful.
 - Quote parameter expansions: "${var}", "${array[@]}".
 - Use `${var:-default}` to handle unset values.
 
@@ -103,7 +104,7 @@
 
 ## Interactive-Only Behavior
 - Only set prompt, aliases, completions, and interactive options when interactive.
-- Use `bash_tpl::is_interactive` to check.
+- Use `bash_cfg::is_interactive` to check.
 - Avoid heavyweight commands in interactive startup.
 
 ## Aliases
@@ -119,7 +120,7 @@
 ## Comments and Documentation
 - Keep comments short and explanatory; no decorative blocks.
 - Update `README.md` when layout or load order changes.
-- If you change `bash_tpl::` namespace, update both `bashrc` and `lib/loader.sh`.
+- The namespace is fixed to `bash_cfg::` for this template.
 
 ## Files to Modify for Common Tasks
 - Add exports: `conf/env.sh`
@@ -139,9 +140,9 @@
 - Add any CI instructions to this file when introduced.
 
 ## Example Patterns
-- Source optional file: `bash_tpl::try_source "${root}/conf/env.sh"`
+- Source optional file: `bash_cfg::try_source "${root}/conf/env.sh"`
 - Guard command: `if command -v git >/dev/null 2>&1; then ...; fi`
-- Interactive check: `if bash_tpl::is_interactive; then ...; fi`
+- Interactive check: `if bash_cfg::is_interactive; then ...; fi`
 
 ## Agent Notes
 - This repository currently has no CI, build system, or tests.

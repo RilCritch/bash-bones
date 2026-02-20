@@ -52,11 +52,13 @@ if [[ -r "${BASH_TPL_ROOT}/bashrc" ]]; then
 fi
 ```
 
-## Namespace Customization
-The loader uses the `bash_tpl::` namespace intentionally as a placeholder.
-To rename it:
-1) Replace `bash_tpl::` in bashrc and lib/loader.sh with your preferred prefix.
-2) No other files depend on the namespace in this template.
+## Namespace
+The loader uses a simple namespace convention: all internal functions start with
+`bash_cfg::` (for example, `bash_cfg::init`).
+In Bash, `::` has no special meaning; it is just part of the function name, so this
+is a normal function naming pattern.
+This keeps the template's helpers easy to spot and reduces the chance of name
+collisions with your own functions or other tooling.
 
 ## How to Extend
 - Add environment exports in conf/env.sh

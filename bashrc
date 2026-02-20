@@ -9,6 +9,6 @@ fi
 
 unset _bash_tpl_root
 
-if declare -F bash_tpl::init >/dev/null 2>&1; then
-    bash_tpl::init
+if declare -F bash_cfg::init >/dev/null 2>&1; then
+    bash_cfg::init
 fi
