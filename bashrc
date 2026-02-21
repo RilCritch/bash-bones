@@ -1,13 +1,13 @@
 # Bash Bones entrypoint; no configuration.
 
-_bash_tpl_root="${BASH_TPL_ROOT:-${HOME}/.bash}"
+_bash_cfg_root="${BASH_TPL_ROOT:-${HOME}/.bash}"
 
-if [[ -r "${_bash_tpl_root}/lib/loader.sh" ]]; then
+if [[ -r "${_bash_cfg_root}/lib/loader.sh" ]]; then
     # shellcheck source=/dev/null
-    . "${_bash_tpl_root}/lib/loader.sh"
+    . "${_bash_cfg_root}/lib/loader.sh"
 fi
 
-unset _bash_tpl_root
+unset _bash_cfg_root
 
 if declare -F bash_cfg::init >/dev/null 2>&1; then
     bash_cfg::init
